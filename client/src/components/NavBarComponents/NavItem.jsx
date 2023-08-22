@@ -5,8 +5,8 @@ const NavItem = ({ nav, active, setActive }) => {
     <li
       key={nav.id}
       className={`${
-        active === nav.title ? "text-white" : "text-secondary"
-      } hover:text-white text-[18px] font-medium cursor-pointer`}
+        active === nav.title ? "text-red-600" : "text-red-600"
+      } hover:text-red-600 text-[18px] font-medium cursor-pointer`}
       onClick={() => {
         setActive(nav.title);
       }}

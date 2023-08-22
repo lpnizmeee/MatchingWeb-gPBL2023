@@ -39,7 +39,7 @@ const ChatBot = () => {
     );
   };
   return (
-    <div className="fixed bottom-0 left-0 z-30 text-yellow-500 bg-primary  m-5 rounded-2xl ">
+    <div className="fixed bottom-0 left-0 z-30 text-yellow-500 bg-red-500  m-5 rounded-2xl ">
       {displayChat ? (
         <div className="border-4 border-primary bg-white pt-5 pb-3 pl-20 pr-5 rounded-xl text-primary">
           <div className="flex flex-col max-h-96 overflow-scroll no-scrollbar">
@@ -51,7 +51,7 @@ const ChatBot = () => {
           Chat here
           <div className=" flex flex-row gap-3">
             <button
-              className="absolute bottom-0 left-0 bg-yellow-500 border-4 border-primary p-3 rounded-xl font-bold select-none"
+              className="absolute bottom-0 left-0 bg-red-500 border-4 border-primary p-3 rounded-xl font-bold select-none"
               onClick={(e) => {
                 e.preventDefault();
                 setDisplayChat(false);
@@ -74,7 +74,7 @@ const ChatBot = () => {
               }}
             ></input>
             <button
-              className="bg-yellow-500 p-3 rounded-xl font-bold"
+              className="bg-red-500 p-3 rounded-xl font-bold"
               onClick={HandleSend}
             >
               Send
@@ -83,7 +83,7 @@ const ChatBot = () => {
         </div>
       ) : (
         <button
-          className="text-yellow-500 h-full w-full p-5 select-none"
+          className="text-white h-full w-full p-5 select-none"
           onClick={(e) => {
             e.preventDefault();
             setDisplayChat(true);
