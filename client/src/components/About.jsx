@@ -88,7 +88,7 @@ const About = () => {
   return (
     <div className="select-none bg-[#232831] flex flex-col items-center p-32">
       <motion.div variants={textVariant()}>
-        <h2 className={`${styles.sectionHeadText} font-body`}>About</h2>
+        <h2 className={`${styles.sectionHeadText} font-body`}>Developers</h2>
       </motion.div>
 
       {/* <motion.p
@@ -102,7 +102,7 @@ const About = () => {
         {members.map((member, index) => (
           <MemberCard key={member.name} index={index} {...member} />
         ))}
-        <img src="/about-img.png" className="h-96"></img>
+        {/* <img src="/about-img.png" className="h-96"></img> */}
       </div>
     </div>
   );

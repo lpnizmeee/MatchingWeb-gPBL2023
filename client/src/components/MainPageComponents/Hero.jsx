@@ -7,14 +7,14 @@ const Hero = () => {
       <div
         className={`absolute inset-0 top-[120px]  max-w-7xl mx-auto ${styles.paddingX} flex flex-row items-start gap-5`}
       >
-        <div className="flex flex-col gap-5 w-2/5 pt-40">
-          <div className="text-5xl font-body">Fast Food Restaurant</div>
-          <div className="">
-            Welcome to DreamFlare, where fast food dreams come true! Indulge in
-            our mouth watering menu filled with delectable delights that will
-            leave you craving for more.{" "}
+        <div className="flex flex-col gap-5 w-3/5 pt-60">
+          <div className="bg-pink-special p-10 rounded-3xl">
+          <div className="text-5xl font-body text-red-600 pb-5">Roommate & Rental Matchmaker</div>
+          <div className="text-red-500">
+            Welcome to CozyAbode, your One-Stop Solution for Finding the Perfect House and Compatible Roommates.{" "}
           </div>
-          <GenericButton text="Order Now" />
+          </div>
+          {/* <GenericButton text="Order Now" /> */}
         </div>
       </div>
     </div>

@@ -39,7 +39,7 @@ const ChatBot = () => {
     );
   };
   return (
-    <div className="fixed bottom-0 left-0 z-30 text-yellow-500 bg-red-500  m-5 rounded-2xl ">
+    <div className="fixed bottom-0 left-0 z-30 text-yellow-500 bg-red-400  m-5 rounded-2xl ">
       {displayChat ? (
         <div className="border-4 border-primary bg-white pt-5 pb-3 pl-20 pr-5 rounded-xl text-primary">
           <div className="flex flex-col max-h-96 overflow-scroll no-scrollbar">
@@ -89,7 +89,7 @@ const ChatBot = () => {
             setDisplayChat(true);
           }}
         >
-          Chat Bot
+          Chat
         </button>
       )}
     </div>

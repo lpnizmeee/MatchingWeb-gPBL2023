@@ -17,7 +17,7 @@ const Navbar = ({ isAdmin, userData, setUserData }) => {
       className={`${
         styles.paddingX
       } w-full flex items-center py-5 absolute top-0 z-20 no-scrollbar border-b border-solid border-black ${
-        currentPath !== "/" ? "bg-primary" : "bg-gray-100"
+        currentPath !== "/" ? "bg-gray-200" : "bg-gray-100"
       }`}
     >
       <div className="flex items-center justify-between w-full mx-auto select-none ">

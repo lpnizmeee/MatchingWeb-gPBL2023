@@ -114,13 +114,13 @@ const App = () => {
                 <MainPage />
                 <Menu addToCart={addToCart} />
                 <About />
-                <Booking />
+                {/* <Booking /> */}
               </div>
             }
           />
           <Route path="/menu" element={<Menu addToCart={addToCart} />} />
           <Route path="/about" element={<About />} />
-          <Route path="/book-table" element={<Booking />} />
+          {/* <Route path="/book-table" element={<Booking />} /> */}
           <Route path="/signup" element={<Signup />} />
           <Route
             path="/cart"

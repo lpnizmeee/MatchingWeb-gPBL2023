@@ -8,7 +8,7 @@ const backendUrl = import.meta.env.VITE_REACT_BACKEND_URL || ""; //from .env fil
 const FilterButton = ({ text, selected, setSelected }) => {
   const filterStyle =
     selected === text
-      ? "rounded-3xl py-2 px-6 bg-primary text-white w-fit"
+      ? "rounded-3xl py-2 px-6 bg-red-400 text-white w-fit"
       : "bg-transparent  rounded-3xl py-2 px-6 hover:bg-primary hover:text-white w-fit";
   return (
     <button className={filterStyle} onClick={(e) => setSelected(text)}>
@@ -25,13 +25,13 @@ const MenuItem = ({ itemKey, item, addToCart }) => {
       // exit={{ opacity: 0, x: 100 }}
       className="flex flex-col gap-5 bg-primary-light text-white  rounded-2xl h-full w-96 "
     >
-      <div className="rounded-bl-3xl rounded-t-xl bg-slate-200 flex flex-col items-center py-10">
+      {/* <div className="rounded-bl-3xl rounded-t-xl bg-slate-200 flex flex-col items-center py-10">
         <img
           src={item.imageURL}
           alt={item.name}
           className="h-40 w-40 rounded-full"
         />
-      </div>
+      </div> */}
 
       <div className="px-10 pb-10 flex flex-col justify-between h-full">
         <div className="text-xl">{item.name}</div>
@@ -89,7 +89,7 @@ const Menu = ({ addToCart }) => {
   };
   return (
     <div className="bg-white text-primary flex flex-col items-center gap-5 p-10 pt-32">
-      <div className="text-4xl font-body">Our Menu</div>
+      <div className="text-4xl font-body">Rental House  Finding</div>
       <div className="w-1/2 flex flex-col lg:flex-row  gap-3 items-center">
         <InputField value={query} setValue={setQuery} placeholder="Search..." />
         <GenericButton text="Search" onClick={HandleSearch} />
