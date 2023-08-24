@@ -7,7 +7,7 @@ const LoginButton = ({ userData, setUserData }) => {
     <div>
       {!userData ? (
         <button
-          className="bg-yellow-500 py-2 px-5 w-32 rounded-3xl text-primary font-semibold hover:bg-yellow-200"
+          className="bg-red-400 py-2 px-5 w-32 rounded-3xl text-white hover:bg-red-500"
           onClick={(e) => {
             e.preventDefault();
             setOverlay(true);
@@ -19,7 +19,7 @@ const LoginButton = ({ userData, setUserData }) => {
         <button>
           <Link
             to="/user"
-            className="text-primary bg-yellow-500 rounded-full p-2 hover:bg-yellow-300 font-semibold"
+            className="text-primary bg-red-400 rounded-full p-2 hover:bg-red-500 font-semibold"
           >
             {userData.name}
           </Link>

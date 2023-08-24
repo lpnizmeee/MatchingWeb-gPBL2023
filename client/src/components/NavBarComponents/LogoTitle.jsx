@@ -12,14 +12,14 @@ const LogoTitle = ({ setActive }) => {
       }}
     >
       <img
-        src={"/logo.png"}
+        src={"/hanamilogo.png"}
         alt="logo"
-        className="object-contain w-9 h-9"
+        className="object-contain w-10 h-10"
         onDragStart={(e) => {
           e.preventDefault();
         }}
       />
-      <p className="text-white text-[25px] font-bold cursor-pointer flex md:flex-row flex-col font-body">
+      <p className="text-red-600 text-[25px] font-bold cursor-pointer flex md:flex-row flex-col font-body">
         Hanami &nbsp;
         <span className="hidden sm:block font-body text-[27px]">
           {" "}

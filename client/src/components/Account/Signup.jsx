@@ -35,8 +35,8 @@ const Signup = () => {
       email: email,
       password: password,
     };
-    // const formData = new FormData();
-    // formData.append("data", JSON.stringify(signupData));
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(signupData));
     const response = await axios.post(`${backendUrl}/auth/signup`, signupData);
     if (response.status === 201) {
       console.log(response.data);
@@ -106,7 +106,6 @@ const Signup = () => {
         />
         <GenericButton text="Sign Up" onClick={HandleSignup} />
       </form>
-      <img src="/about-img.png" className="h-96"></img>
     </div>
   );
 };
