@@ -41,8 +41,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import './Map.css';
 
-mapboxgl.accessToken =
-  'pk.eyJ1IjoibHBuaXptZWVlIiwiYSI6ImNsbHAwOXhqMzAxaW4zb256ZGtxMzMwcTEifQ.rg3ADLxuX0slDWtXwPu_bQ';
+mapboxgl.accessToken = import.meta.env.VITE_REACT_MAPBOX_ACC_TOKEN;
 
 const Map = () => {
   const mapContainerRef = useRef(null);
