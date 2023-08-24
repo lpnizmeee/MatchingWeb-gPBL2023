@@ -21,6 +21,7 @@ import {
   UserPage,
   LoginSuccess,
   Footer,
+  // BoxMap,
 } from "./components";
 import { ShopButton } from "./components/Buttons";
 import { loadCartData, storeCartData } from "./storage-managers/shoppingCart";

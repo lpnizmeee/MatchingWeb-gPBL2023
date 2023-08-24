@@ -5,7 +5,7 @@ from dataclasses import field
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInfor
-        fields = "__all__"
+        fields = ['name','username','phoneNumber','password']
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
