@@ -37,8 +37,9 @@ const Signup = () => {
     };
     const formData = new FormData();
     formData.append("data", JSON.stringify(signupData));
-    // const response = await axios.post(`${backendUrl}/roommate`, signupData);
-    const response = await axios.post(`http://127.0.0.1:8000/roommate/`, signupData);
+    console.log(backendUrl)
+    const response = await axios.post(`${backendUrl}/roommate/`, signupData);
+    // const response = await axios.post(`http://127.0.0.1:8000/roommate/`, signupData);
     if (response.status === 201) {
       console.log(response.data);
       alert("Signup successful, please go to the login page to login");

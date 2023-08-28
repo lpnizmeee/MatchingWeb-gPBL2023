@@ -21,7 +21,7 @@ import {
   UserPage,
   LoginSuccess,
   Footer,
-  // BoxMap,
+  BoxMap,
 } from "./components";
 import { ShopButton } from "./components/Buttons";
 import { loadCartData, storeCartData } from "./storage-managers/shoppingCart";
@@ -134,6 +134,7 @@ const App = () => {
             }
           />
           <Route path="/user" element={<UserPage userData={userData} />} />
+          <Route path="/map" element={<BoxMap/>} />
           <Route path="*" element={<NotFound />} />
           <Route
             path="/login/success"
