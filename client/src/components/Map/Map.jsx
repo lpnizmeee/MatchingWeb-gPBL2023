@@ -43,7 +43,7 @@ import './Map.css';
 
 mapboxgl.accessToken = import.meta.env.VITE_REACT_MAPBOX_ACC_TOKEN;
 
-const Map = () => {
+const BoxMap = () => {
   const mapContainerRef = useRef(null);
 
   const [lng, setLng] = useState(105.8333522);
@@ -84,4 +84,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default BoxMap;

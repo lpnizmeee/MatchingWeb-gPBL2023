@@ -11,7 +11,7 @@ import AdminHomepage from "./Admin/AdminHomepage";
 import UserPage from "./Account/UserPage";
 import LoginSuccess from "./Account/LoginSuccess";
 import Footer from "./Footer";
-import BoxMap from "./Map";
+import BoxMap from "./Map/Map.jsx";
 export {
   MainPage,
   Navbar,
