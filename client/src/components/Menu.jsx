@@ -64,7 +64,9 @@ const Menu = ({ addToCart }) => {
     const fetchData = async () => {
       const data = { data: " " };
       console.log(backendUrl);
-      const res = await axios.post(`${backendUrl}/search/item`, data, {
+      // const res = await axios.get(`${backendUrl}/roommate/recommend/`, data, {
+      const res = await axios.get(`${backendUrl}/roommate/recommend/`, {
+
         withCredentials: true,
       });
       setData(res.data);
@@ -89,7 +91,7 @@ const Menu = ({ addToCart }) => {
   };
   return (
     <div className="bg-white text-primary flex flex-col items-center gap-5 p-10 pt-32">
-      <div className="text-4xl font-body">Rental House  Finding</div>
+      <div className="text-4xl font-body">Roommate Recommend</div>
       <div className="w-1/2 flex flex-col lg:flex-row  gap-3 items-center">
         <InputField value={query} setValue={setQuery} placeholder="Search..." />
         <GenericButton text="Search" onClick={HandleSearch} />

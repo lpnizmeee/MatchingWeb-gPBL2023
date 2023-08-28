@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 django-cors-headers = "*"
+dj-database-url = "*"
 
 [dev-packages]
 

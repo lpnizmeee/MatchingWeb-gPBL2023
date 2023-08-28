@@ -21,15 +21,18 @@ const Signin = ({ setOverlay, setUserData }) => {
       username: username,
       password: password,
     };
+    // const loginDataForm = new FormData();
+    // loginDataForm.append("data", JSON.stringify(loginData));
     try {
+      console.log(loginData);
+      // console.log(loginDataForm);
       const response = await axios.post(
-        `${backendUrl}/auth/signin`,
+        `${backendUrl}/roommate/login/`,
         loginData,
         {
           withCredentials: true,
         }
       );
-      console.log(response.data);
       if (response.data) {
         setOverlay(false);
         alert("Login successful");
