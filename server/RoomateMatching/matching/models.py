@@ -1,4 +1,5 @@
 from django.db import models
+
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 # Create your models here.
@@ -6,16 +7,24 @@ from django.contrib.auth.forms import UserCreationForm
 class UserInfor(models.Model):
     name = models.CharField(max_length=30,blank=False)
     #email= models.CharField(max_length=50,default="")
-    locate=models.CharField(max_length=20,blank=True,null=True)
+    #locate=models.CharField(max_length=20,blank=True,null=True)
     age = models.IntegerField(null=True, blank=True)
     gender = models.BooleanField(default=True)                          # False : Girl , True : Boy
     rent = models.IntegerField(null=True,blank=True)  
     phoneNumber = models.CharField(max_length=13,null=True)
+    longtitude = models.FloatField(null=True, blank=True)
+    latitude = models.FloatField(null=True, blank=True)
+    status = models.IntegerField(blank=True,null=True)
     password = models.CharField(max_length=30,blank=False,null=False)
     username = models.CharField(max_length=30,blank=False,null=False,unique=True)
 
     def __str__(self): 
         return self.name
+    
+# class UserMatchingInfo(models.Model):
+#     class Meta:
+#         model = UserInfor
+#         fields = ['age','gender','longtitude','latitude','rent']
 
 class Match(models.Model):
     userIDA = models.ForeignKey(UserInfor,related_name='matches_as_userIDA',on_delete=models.CASCADE,blank=False,null=False)
