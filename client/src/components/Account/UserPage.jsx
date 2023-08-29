@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { storeUserData } from "../../storage-managers/userData";
-import { GenericButton } from "../Buttons";
+import { GenericButton, EditProfileButton } from "../Buttons";
 import { InputField } from "../InputFields/InputField";
 import axios from "axios";
 const backendUrl = import.meta.env.VITE_REACT_BACKEND_URL || ""; //from .env files
@@ -70,6 +70,11 @@ const UserPage = ({ userData }) => {
     window.location.reload();
     navigate("/");
   };
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    navigate("/edit");
+  }
   // const handleLoadOrders = async (e) => {
   //   e.preventDefault();
   //   const customerID = userData.id;
@@ -88,8 +93,12 @@ const UserPage = ({ userData }) => {
         <InfoCard title="Age" info={userData.age} />
         <InfoCard title="Rent" info={userData.rent} />
         <InfoCard title="Address" info={userData.locate} />
+        <InfoCard title="Longitude" info={userData.longtitude} /> 
+        <InfoCard title="Latitude" info={userData.latitude} />
 
-        <GenericButton text="logout" onClick={handleLogout} />
+
+        <EditProfileButton text="Edit" onClick={handleEdit} />
+        <GenericButton text="Logout" onClick={handleLogout} />
         {/* <GenericButton text="load orders" onClick={handleLoadOrders} />
         {orders.length !== 0
           ? orders.map((order) => {

@@ -3,4 +3,5 @@ import GenericButton from "./GenericButton";
 import GoogleButton from "./GoogleButton";
 import LoginButton from "./LoginButton";
 import ShopButton from "./ShopButton";
-export { FacebookButton, GenericButton, GoogleButton, LoginButton, ShopButton };
+import EditProfileButton from "./EditProfileButton";
+export { FacebookButton, GenericButton, GoogleButton, LoginButton, ShopButton, EditProfileButton };

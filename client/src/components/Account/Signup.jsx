@@ -1,11 +1,12 @@
 import React from "react";
-import { InputField } from "../InputFields/InputField";
+import { InputField, SelectField } from "../InputFields/InputField";
 import { useState } from "react";
 import GenericButton from "../Buttons/GenericButton";
 import PasswordChecklist from "react-password-checklist";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { storeUserData } from "../../storage-managers/userData";
+import { BoxMap } from "../Map";
 const backendUrl = import.meta.env.VITE_REACT_BACKEND_URL || ""; //from .env files
 const Signup = () => {
   const [name, setName] = useState("");
@@ -15,6 +16,15 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [validPassword, setValidPassword] = useState(false);
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [rent, setRent] = useState("");
+  const [locate, setLocate] = useState("");
+  const [longtitude, setLongtitude] = useState("");
+  const [latitude, setLatitude] = useState("");
+
+
+
   const navigate = useNavigate();
   const HandleSignup = async (e) => {
     e.preventDefault();
@@ -34,11 +44,17 @@ const Signup = () => {
       phoneNumber: phone,
       // email: email,
       password: password,
+      gender: gender,
+      age: age,
+      rent: rent,
+      // locate: locate,
+      longtitude: longtitude,
+      latitude: latitude,
     };
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(signupData));
+    // const formData = new FormData();
+    // formData.append("data", JSON.stringify(signupData));
+    console.log(signupData);
     const response = await axios.post(`${backendUrl}/roommate/`, signupData);
-    // const response = await axios.post(`http://127.0.0.1:8000/roommate/`, signupData);
     if (response.status === 201) {
       console.log(response.data);
       alert("Signup successful, please go to the login page to login");
@@ -56,12 +72,6 @@ const Signup = () => {
           placeholder={"Full Name"}
         />
         <InputField
-          type={"text"}
-          value={username}
-          setValue={setUsername}
-          placeholder={"Username"}
-        />
-        <InputField
           type={"email"}
           value={email}
           setValue={setEmail}
@@ -72,6 +82,25 @@ const Signup = () => {
           value={phone}
           setValue={setPhone}
           placeholder={"Phone Number"}
+        />
+        <InputField
+          type={"age"}
+          value={age}
+          setValue={setAge}
+          placeholder={"Age"}
+        />
+        <InputField
+          type={"rent"}
+          value={rent}
+          setValue={setRent}
+          placeholder={"Rent"}
+        />
+        <BoxMap setLongtitude={setLongtitude} setLatitude={setLatitude} setLocate={setLocate} />
+        <InputField
+          type={"text"}
+          value={username}
+          setValue={setUsername}
+          placeholder={"Username"}
         />
         <InputField
           type={"password"}
