@@ -3,8 +3,11 @@ import { useState, useEffect } from "react";
 import { InputField } from "./InputFields/InputField";
 import GenericButton from "./Buttons/GenericButton";
 import { motion, AnimatePresence } from "framer-motion";
+import { loadUserData } from "../storage-managers/userData";
 import axios from "axios";
 const backendUrl = import.meta.env.VITE_REACT_BACKEND_URL || ""; //from .env files
+
+
 const FilterButton = ({ text, selected, setSelected }) => {
   const filterStyle =
     selected === text
@@ -16,6 +19,8 @@ const FilterButton = ({ text, selected, setSelected }) => {
     </button>
   );
 };
+
+
 const MenuItem = ({ itemKey, item, addToCart }) => {
   return (
     <motion.div
@@ -35,10 +40,15 @@ const MenuItem = ({ itemKey, item, addToCart }) => {
 
       <div className="px-10 pb-10 flex flex-col justify-between h-full">
         <div className="text-xl">{item.name}</div>
-        <div className="text-sm">{item.description}</div>
+        <div className="text-sm">{item.gender}</div>
+        <div className="text-sm">{item.age}</div>
+        <div className="text-sm">{item.phoneNumber}</div>
+        <div className="text-sm">{item.longtitude}</div>
+        <div className="text-sm">{item.latitude}</div>
+        <div className="text-sm">{item.status}</div>
 
         <div className="justify-between flex flex-row pt-5">
-          <div className="text-xl">${item.price}</div>
+          <div className="text-xl">${item.rent}</div>
           <button
             className="rounded-full bg-yellow-500 hover:bg-yellow-300 w-12 h-12"
             onClick={(e) => {
@@ -60,35 +70,41 @@ const Menu = ({ addToCart }) => {
   const [query, setQuery] = useState("");
   const [data, setData] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
+  const user = loadUserData();
+
+
   useEffect(() => {
     const fetchData = async () => {
       const data = { data: " " };
-      console.log(backendUrl);
-      // const res = await axios.get(`${backendUrl}/roommate/recommend/`, data, {
-      const res = await axios.get(`${backendUrl}/roommate/recommend/`, {
-
+      const username = { "username": user.username };
+      const res = await axios.post(`${backendUrl}/roommate/recommend/`, username, {
         withCredentials: true,
       });
       setData(res.data);
     };
     fetchData();
   }, []);
+
+
   useEffect(() => {
     setCategoryList([...new Set(data.map((item) => item.category[0]))]);
   }, [data]);
+
+
   const HandleSearch = async (e) => {
     e.preventDefault();
     if (query === "") return;
     if (query === "all") setQuery(" ");
     //TODO: Handle query
-    const data = { data: query };
-
-    const res = await axios.post(`${backendUrl}/search/item`, data, {
+    const data = { "data": query };
+    const res = await axios.post(`${backendUrl}/roommate/search/item`, data, {
       withCredentials: true,
     });
     setData(res.data);
     setSelectedFilter("All");
   };
+
+
   return (
     <div className="bg-white text-primary flex flex-col items-center gap-5 p-10 pt-32">
       <div className="text-4xl font-body">Roommate Recommend</div>

@@ -39,7 +39,7 @@ export const navLinks = [
   },
   {
     id: "menu",
-    title: "FINDHOUSE",
+    title: "FINDROOMATE",
     pathname: "/menu",
   },
   {

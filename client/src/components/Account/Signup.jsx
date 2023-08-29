@@ -38,7 +38,6 @@ const Signup = () => {
     }
     //TODO: Handle signup
     const signupData = {
-      // id: username,
       name: name,
       username: username,
       phoneNumber: phone,
