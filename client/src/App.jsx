@@ -102,7 +102,7 @@ const App = () => {
           setUserData={setUserData}
           userData={userData}
         />
-        <ChatBot />
+        {/* <ChatBot /> */}
         <ShopButton
           itemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
         />

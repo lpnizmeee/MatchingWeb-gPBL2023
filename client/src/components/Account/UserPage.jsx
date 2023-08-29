@@ -10,7 +10,7 @@ const InfoCard = ({ title, info }) => {
     <div className="flex flex-row items-center gap-3 text-xl text-yellow-100 rounded-full bg-primary-light w-2/3 ">
       <div className="font-extrabold p-3 w-1/3">{title}</div>
       {info ? (
-        <div className="text-primary bg-yellow-300 h-full w-2/3 p-3 rounded-r-full">
+        <div className="text-primary bg-red-400 h-full w-2/3 p-3 rounded-r-full">
           {info}
         </div>
       ) : (
@@ -57,7 +57,7 @@ const OrderCard = ({ order }) => {
   );
 };
 const UserPage = ({ userData }) => {
-  const [orders, setOrders] = useState([]);
+  // const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     if (userData === null) return;
@@ -70,31 +70,32 @@ const UserPage = ({ userData }) => {
     window.location.reload();
     navigate("/");
   };
-  const handleLoadOrders = async (e) => {
-    e.preventDefault();
-    const customerID = userData.id;
-    const response = await axios.get(
-      `${backendUrl}/api/history/get_all_orders/${customerID}`
-    );
-    console.log(response.data);
-    setOrders(response.data);
-  };
+  // const handleLoadOrders = async (e) => {
+  //   e.preventDefault();
+  //   const customerID = userData.id;
+  //   const response = await axios.get(
+  //     `${backendUrl}/api/history/get_all_orders/${customerID}`
+  //   );
+  //   console.log(response.data);
+  //   setOrders(response.data);
+  // };
   return userData ? (
     <div className="select-none bg-white flex flex-col items-center p-32 gap-32">
       <h1 className="flex flex-col item-center gap-3 text-xl font-extrabold text-primary w-1/2">
         <InfoCard title="Name" info={userData.name} />
-        <InfoCard title="Email" info={userData.email} />
-        <InfoCard title="Role" info={userData.role} />
-        <InfoCard title="Address" info={userData.address} />
-        <InfoCard title="Phone" info={userData.phone} />
+        <InfoCard title="Gender" info={userData.gender == true ? "male" : "fermale"} />
+        <InfoCard title="Phone" info={userData.phoneNumber} />
+        <InfoCard title="Age" info={userData.age} />
+        <InfoCard title="Rent" info={userData.rent} />
+        <InfoCard title="Address" info={userData.locate} />
 
         <GenericButton text="logout" onClick={handleLogout} />
-        <GenericButton text="load orders" onClick={handleLoadOrders} />
+        {/* <GenericButton text="load orders" onClick={handleLoadOrders} />
         {orders.length !== 0
           ? orders.map((order) => {
               return <OrderCard order={order} />;
             })
-          : null}
+          : null} */}
       </h1>
     </div>
   ) : (

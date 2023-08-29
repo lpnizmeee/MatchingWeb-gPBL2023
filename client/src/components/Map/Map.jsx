@@ -37,8 +37,12 @@
 //     </div>
 //   );
 // }
+
+//MAIN
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './Map.css';
 
 mapboxgl.accessToken = import.meta.env.VITE_REACT_MAPBOX_ACC_TOKEN;
@@ -62,6 +66,13 @@ const BoxMap = () => {
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
+    map.addControl(
+      new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+      }), "bottom-left"
+    );
+
     map.on('move', () => {
       setLng(map.getCenter().lng.toFixed(4));
       setLat(map.getCenter().lat.toFixed(4));
@@ -74,14 +85,18 @@ const BoxMap = () => {
 
   return (
     <div>
-      <div className='sidebarStyle'>
+      <div className='main-css'>
+      <div className='sidebarStyle bg-red-400'>
         <div>
-          Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+          Longitude: {lng} | Latitude: {lat}
         </div>
       </div>
       <div className='map-container' ref={mapContainerRef} />
+      </div>
     </div>
   );
 };
 
 export default BoxMap;
+
+

@@ -47,11 +47,11 @@ export const navLinks = [
     title: "ABOUT",
     pathname: "/about",
   },
-  // {
-  //   id: "book table",
-  //   title: "BOOK TABLE",
-  //   pathname: "/book-table",
-  // },
+  {
+    id: "map",
+    title: "MAP",
+    pathname: "/map",
+  },
 ];
 
 export const adminNavLinks = [
