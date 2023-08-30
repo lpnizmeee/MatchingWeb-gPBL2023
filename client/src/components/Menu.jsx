@@ -26,7 +26,7 @@ function handleMatch({ action, targetUser, userA }) {
       "usernameA": userA.username,
       "usernameB": targetUser.username,
     }
-    console.log(data);
+    // console.log(data);
     const res = axios.put(`${backendUrl}/roommate/match/`, data, {
       withCredentials: true,
     });
@@ -200,7 +200,7 @@ const Menu = ({ addToCart }) => {
         withCredentials: true,
       });
       setData(res.data);
-      console.log(res.data);
+      // console.log(res.data);
       setReload(false);
     };
     fetchData();
@@ -219,12 +219,11 @@ const Menu = ({ addToCart }) => {
     //TODO: Handle query
     const data = { "username": user.username,
                     "keyword": query};
-    console.log(data);
     const res = await axios.post(`${backendUrl}/roommate/usersearch/`, data, {
       withCredentials: true,
     });
     setData(res.data);
-    setReload(true)
+    // setReload(true)
     // setSelectedFilter("All");
   };
 
