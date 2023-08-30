@@ -258,11 +258,13 @@ class UserChat(APIView):
         userB = UserInfor.objects.get(username=usernameB)
         try:
             objects = Match.objects.get(userIDA= userA.pk,userIDB=userB.pk)
-            return Response({"roomid": objects.pk})
+            serializer = MatchSerializer(objects)
+            return Response(serializer.data)
         except Match.DoesNotExist:
             try:
                 objects = Match.objects.get(userIDA= userB.pk,userIDB=userA.pk)
-                return Response({"roomid": objects.pk})
+                serializer = MatchSerializer(objects)
+                return Response(serializer.data)
             except Match.DoesNotExist:
                 return Response({"message": "Something goes wrong"})       
 
