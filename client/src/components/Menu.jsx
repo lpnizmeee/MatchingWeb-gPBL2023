@@ -169,7 +169,7 @@ const MenuItem = ({ itemKey, item, addToCart, userA }) => {
         </div>
         <div className="justify-between items-center flex flex-row pt-5">
           <div className="text-xl font-serif">Rent: {item.rent}$</div>
-          <HandleStatus status={3} targetUser={item} userA={userA}/>
+          <HandleStatus status={item.status} targetUser={item} userA={userA}/>
         </div>
       </div>
     </motion.div>
