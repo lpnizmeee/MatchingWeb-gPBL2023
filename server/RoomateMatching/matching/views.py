@@ -9,8 +9,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from matching.models import UserInfor,Match
-from matching.serializer import UserSerializer,RegisterSerializer
-#from matching.serializer import CustomerWithStatusSerializer
+from matching.serializer import UserSerializer,MatchSerializer
+from matching.serializer import CustomerWithStatusSerializer
 from matching.serializer import UpdateSerializer,RecommendSerializer
 class UserList(APIView):
     def get(self,request):
@@ -25,7 +25,7 @@ class UserList(APIView):
 
 class UserCreate(APIView):
     def post(self,request):
-       serializer = RegisterSerializer(data=request.data)
+       serializer = UserSerializer(data=request.data)
        if serializer.is_valid():
            serializer.save() 
            user = User.objects.create_user(username=serializer.data['username'], password=serializer.data['password'],email="Duong.Dt@gmail.com")
@@ -100,56 +100,108 @@ class UserUpdate(APIView):
     
 class UserNotification(APIView):
     def get(self,request):
-        user = request.user
-        if user == "AnonymousUser":
-            return Response(serializer.errors,status=status.HTTP_401_BAD_REQUEST)
-        try: 
-            userInfor = UserInfor.objects.get(username=user.get_username())
-            invitations = Match.objects.filter(userIDB=userInfor.pk)
-            ordered_objects=[]
-            for userId in invitations:
-                obj = UserInfor.objects.get(pk = userId.userIDA)
-                ordered_objects.append(obj)
-            serializer = UserSerializer(ordered_objects,many=True)
-            return Response(serializer.data)
-        except:
-            return Response({
-                "error": "User does not exist"
-            },status = status.HTTP_404_NOT_FOUND)
+        username = request.data.get("username")
+        user1 = UserInfors.objects.get(username=username)
+        UserInfors = UserInfor.objects.exclude(pk=user1.pk)
+        # user = request.user
+        # if user == "AnonymousUser":
+        #     return Response(serializer.errors,status=status.HTTP_401_BAD_REQUEST)
+        ordered_objects =[]
+        for user in UserInfors:
+            obj = UserInfor.objects.get(pk=user.pk)
+            try:
+                search = Match.objects.get(userIDA=obj.pk,userIDB= user1.pk) # A <-- B: other -->user
+                if search.status ==0: 
+                    ordered_objects.append(obj)
+            except Match.DoesNotExist:
+                pass
+
+        serializer =RecommendSerializer(ordered_objects,many=True)
+        return Response(serializer.data) 
         
 class UserMatch(APIView):
-    def post(self,request):
-       serializer = RegisterSerializer(data=request.data)
-       if serializer.is_valid():
-           serializer.save() 
-           user = User.objects.create_user(username=serializer.data['username'], password=serializer.data['password'],email="Duong.Dt@gmail.com")
-           user.save()
-           return Response(serializer.data, status=status.HTTP_201_CREATED)
-       else:
-           return Response(serializer.errors,status=status.HTTP_404_NOT_FOUND) 
-       
     def put(self,request):                 #update
-        user = request.user
-        usernameB = request.data.get("username")
-        if user == "AnonymousUser":
-            return Response(serializer.errors,status=status.HTTP_401_BAD_REQUEST)
-        user1 = UserInfor.objects.get(username=user.get_username())
-        user2 = UserInfor.objects.get(username=usernameB)
-        data = {
-            "userIDA": user1.pk,
-            "userIDB": user2.pk,
-            "status": 1,
-            # Các trường khác tùy ý
-        }
-        newMatch = Match.objects.create_user(user)
-        user.save()
-        serializer = UpdateSerializer(user1,data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    
-#########################
+        #user = request.user
+        usernameA = request.data.get("usernameA")
+        usernameB = request.data.get("usernameB")
+        action = request.data.get("action")
+        # if user == "AnonymousUser":
+        #     return Response(serializer.errors,status=status.HTTP_401_BAD_REQUEST)
+        userA = UserInfor.objects.get(username=usernameA)
+        userB = UserInfor.objects.get(username=usernameB)
+        if action == 0:      # REJECT
+            try:
+                objects =Match.objects.get(userIDA= userB.pk,userIDB=userA.pk)
+                objects.delete()   # cancel
+                return Response({"message": "Rejected!"})
+            except:
+                return Response({"message": "Something goes wrong!"})
+        elif action == 1:    # ACCEPT
+            try:
+                objects =Match.objects.get(userIDA= userB.pk,userIDB=userA.pk)
+                serializer = CustomerWithStatusSerializer(objects,data={"status":1})
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response({"message": "Accept!"})
+                else :
+                    return Response({"message": "Something goes wrong!"})
+            except:
+                return Response({"message": "Something goes wrong!"})
+        elif action == 2:    # CANCEL
+            try:
+                objects = Match.objects.get(userIDA= userB.pk,userIDB=userA.pk)
+                objects.delete()
+                return Response({"message": "Unfriend!"})
+            except Match.DoesNotExist:
+                # new match
+                try:
+                   objects = Match.objects.get(userIDA= userA.pk,userIDB=userB.pk)
+                   objects.delete()
+                   return Response({"message": "Unfriend!"})
+                except Match.DoesNotExist: 
+                    return Response({"message": "Something goes wrong!"})
+        elif action ==3:    #  MATCH NOW
+            try:
+                objects = Match.objects.get(userIDA= userB.pk,userIDB=userA.pk)
+                objects.delete()
+                #return Response({"message": "Something goes wrong!"})
+            except Match.DoesNotExist:
+                pass
+            data = {
+                    "userIDA" : userA.pk,
+                    "userIDB" : userB.pk,
+                    "status" : 0
+                }
+            serializer = MatchSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "Successfully send requestto match"})
+            else :
+                return Response({"message": "Fail to send request"})
+            # newMatch = Match.objects.create_user(userIDA=userA.pk, userIDB = userB.pk,status =0)
+            # newMatch.save()
+                #return Response(serializer.data, status=status.HTTP_201_CREATED)
+        elif action==4:    # WAITING
+            try:
+                objects = Match.objects.get(userIDA= userA.pk,userIDB=userB.pk)
+                return Response({"message": "Waiting!"})
+            except Match.DoesNotExist:
+                return Response({"message": "Something goes wrong"})
+        elif action==5:    # Cancel for A->B
+            try:
+                objects = Match.objects.get(userIDA= userA.pk,userIDB=userB.pk)
+                objects.delete()
+                return Response({"message": "Cancel!"})
+            except Match.DoesNotExist:
+                return Response({"message": "Something goes wrong"})
+        else :
+            return Response({"message": "Something goes wrong"})
+##############################            
+# class UserSearch(APIView):
+#     def post(self,request):
+
+
+##############################
 with open('similarity.est', 'rb') as f:
         similarity = dill.load(f)    
 
@@ -176,7 +228,7 @@ class UserRecommend(APIView):
             user2_json = json.dumps(user2_js)  # Chuyển từ dict thành JSON chuỗi
             user2_dict = json.loads(user2_json)  # Chuyển từ JSON chuỗi thành dict
            
-            compare = similarity(user1_dict,user2_dict )
+            compare = similarity(user1_dict,user2_dict)
             compare["id"] = user2.id
             compare_list.append(compare)
         
@@ -199,18 +251,29 @@ class UserRecommend(APIView):
             obj = UserInfor.objects.get(pk=pk)
             #serializer =UserSerializer(obj)
             try:
-                search = Match.objects.get(userIDA=obj.pk,userIDB= user1.pk)
-                obj.status = search.status
+                search = Match.objects.get(userIDB=obj.pk,userIDA= user1.pk) # A -> B : user -> other
+                if search.status == 1 :     # match
+                    obj.status = 1
+                elif  search.status == 0 :  # 1 side
+                    obj.status = 3          # waiting
+                else: 
+                    obj.status =2           # cancel --> nothing
             except Match.DoesNotExist:
-                obj.status = 2    # NOTHING
+                try:
+                    search = Match.objects.get(userIDA=obj.pk,userIDB= user1.pk) # A <-- B: other -->user
+                    if search.status ==0: 
+                        obj.status = 0
+                    elif search.status ==1: 
+                        obj.status = 1      # accept
+                    else: 
+                        obj.status =2 # match
+                except:
+                    obj.status = 2    # NOTHING
             #serializer1 = RecommendSerializer(status)
             
             ordered_objects.append(obj)
             
         serializer =RecommendSerializer(ordered_objects,many=True)
-        #serializer2 = CustomerWithStatusSerializer(ordered_objects,many=True)
-        # combined_data = {**serializer.data, **serializer2.data}
-        # return Response(combined_data)
         return Response(serializer.data) 
         #return Response(ordered_objects)
 

@@ -24,7 +24,11 @@ class RecommendSerializer(serializers.ModelSerializer):
         model = UserInfor
         fields = ['name','gender','phoneNumber','age','rent','longtitude','latitude','status','username']
 
-# class CustomerWithStatusSerializer(UserSerializer, RecommendSerializer ):
-#     class Meta:
-#         model = Match
-#         fields = ['status']
+class CustomerWithStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Match
+        fields = ['status']
+class MatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Match
+        fields = "__all__" 
