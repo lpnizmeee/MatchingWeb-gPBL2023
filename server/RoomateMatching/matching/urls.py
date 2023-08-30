@@ -5,7 +5,7 @@ from django.urls import path
 from matching.views import UserCreate,UserLogin
 from matching.views import UserList ,UserDetail
 from matching.views import UserRecommend,UserUpdate
-from matching.views import UserMatch
+from matching.views import UserMatch,UserSearch
 # from book_api.views import book
 urlpatterns = [
     # path('',book_create),
@@ -18,5 +18,6 @@ urlpatterns = [
     # path('<int:pk>',book)
     path('update/',UserUpdate.as_view()),
     path('match/',UserMatch.as_view()),
+    path('usersearch/',UserSearch.as_view()),
     
 ]

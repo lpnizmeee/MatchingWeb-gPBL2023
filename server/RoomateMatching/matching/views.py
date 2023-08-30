@@ -12,6 +12,7 @@ from matching.models import UserInfor,Match
 from matching.serializer import UserSerializer,MatchSerializer
 from matching.serializer import CustomerWithStatusSerializer
 from matching.serializer import UpdateSerializer,RecommendSerializer
+from django.db.models import Q
 class UserList(APIView):
     def get(self,request):
         UserInfors = UserInfor.objects.all()
@@ -175,7 +176,7 @@ class UserMatch(APIView):
             serializer = MatchSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
-                return Response({"message": "Successfully send requestto match"})
+                return Response({"message": "Successfully send request to match"})
             else :
                 return Response({"message": "Fail to send request"})
             # newMatch = Match.objects.create_user(userIDA=userA.pk, userIDB = userB.pk,status =0)
@@ -197,8 +198,54 @@ class UserMatch(APIView):
         else :
             return Response({"message": "Something goes wrong"})
 ##############################            
-# class UserSearch(APIView):
-#     def post(self,request):
+class UserSearch(APIView):
+    def post(self,request):
+        username = request.data.get("username")
+        keyword = request.data.get("keyword")
+        user1 = UserInfor.objects.get(username=username)
+        if keyword=="male":
+            keyword =True
+        if keyword=="female":
+            keyword=False
+        user = UserInfor.objects.filter(
+            Q(name__icontains=keyword) |
+            Q(age__icontains=keyword) |
+            Q(gender__icontains=keyword)|
+            Q(phoneNumber__icontains=keyword) |
+            Q(rent__icontains=keyword) 
+            #Q(longtitude__icontains=keyword)
+            )
+        ordered_objects = []
+        for obj in user:
+            #obj = UserInfor.objects.get(pk=pk)
+            #serializer =UserSerializer(obj)
+            try:
+                search = Match.objects.get(userIDB=obj.pk,userIDA= user1.pk) # A -> B : user -> other
+                if search.status == 1 :     # match
+                    obj.status = 1
+                elif  search.status == 0 :  # 1 side
+                    obj.status = 3          # waiting
+                else: 
+                    obj.status =2           # cancel --> nothing
+            except Match.DoesNotExist:
+                try:
+                    search = Match.objects.get(userIDA=obj.pk,userIDB= user1.pk) # A <-- B: other -->user
+                    if search.status ==0: 
+                        obj.status = 0
+                    elif search.status ==1: 
+                        obj.status = 1      # accept
+                    else: 
+                        obj.status =2 # match
+                except:
+                    obj.status = 2    # NOTHING
+            #serializer1 = RecommendSerializer(status)
+            
+            ordered_objects.append(obj)
+        
+        serializer = RecommendSerializer(ordered_objects,many=True)
+        #return Response({'access_token': access_token})
+        return Response(serializer.data)
+        
 
 
 ##############################
@@ -276,4 +323,5 @@ class UserRecommend(APIView):
         serializer =RecommendSerializer(ordered_objects,many=True)
         return Response(serializer.data) 
         #return Response(ordered_objects)
+
 
