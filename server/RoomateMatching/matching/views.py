@@ -25,7 +25,7 @@ class UserList(APIView):
 
 class UserCreate(APIView):
     def post(self,request):
-       serializer = RegisterSerializer(data=request.data)
+       serializer = UserSerializer(data=request.data)
        if serializer.is_valid():
            serializer.save() 
            user = User.objects.create_user(username=serializer.data['username'], password=serializer.data['password'],email="Duong.Dt@gmail.com")

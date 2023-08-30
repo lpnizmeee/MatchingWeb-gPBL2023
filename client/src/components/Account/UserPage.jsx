@@ -92,7 +92,7 @@ const UserPage = ({ userData }) => {
         <InfoCard title="Phone" info={userData.phoneNumber} />
         <InfoCard title="Age" info={userData.age} />
         <InfoCard title="Rent" info={userData.rent} />
-        <InfoCard title="Address" info={userData.locate} />
+        {/* <InfoCard title="Address" info={userData.locate} /> */}
         <InfoCard title="Longitude" info={userData.longtitude} /> 
         <InfoCard title="Latitude" info={userData.latitude} />
 

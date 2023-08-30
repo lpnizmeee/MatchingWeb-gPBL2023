@@ -14,7 +14,7 @@ class UserInfor(models.Model):
     phoneNumber = models.CharField(max_length=13,null=True)
     longtitude = models.FloatField(null=True, blank=True)
     latitude = models.FloatField(null=True, blank=True)
-    status = models.IntegerField(blank=True,null=True)
+    status = models.IntegerField(default=2,blank=True,null=True)
     password = models.CharField(max_length=30,blank=False,null=False)
     username = models.CharField(max_length=30,blank=False,null=False,unique=True)
 
