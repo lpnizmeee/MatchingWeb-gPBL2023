@@ -8,7 +8,7 @@ const Footer = () => {
         style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
         <a className="text-white" href="/">
-          © 2023 Copyright DreamFlare
+          © 2023 Copyright Hanami Team
         </a>
       </div>
     </footer>

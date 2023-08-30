@@ -22,8 +22,10 @@ const Signup = () => {
   const [locate, setLocate] = useState("");
   const [longtitude, setLongtitude] = useState(105.8333522);
   const [latitude, setLatitude] = useState(21.004);
-
-
+  const options = [
+    { value: true, text: 'Male' },
+    { value: false, text: 'Female' },
+  ];
 
   const navigate = useNavigate();
   const HandleSignup = async (e) => {
@@ -61,6 +63,8 @@ const Signup = () => {
       alert("Signup successful, please go to the login page to login");
       navigate("/");
     }
+
+    
   };
   return (
     <div className="select-none bg-[#232831] flex flex-col items-center p-32 gap-32">
@@ -83,6 +87,12 @@ const Signup = () => {
           value={phone}
           setValue={setPhone}
           placeholder={"Phone Number"}
+        />
+        <SelectField
+          value={gender}
+          setValue={setGender}
+          placeholder="Gender"
+          options={options}
         />
         <InputField
           type={"age"}

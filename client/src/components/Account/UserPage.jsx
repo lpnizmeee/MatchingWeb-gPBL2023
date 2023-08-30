@@ -88,7 +88,7 @@ const UserPage = ({ userData }) => {
     <div className="select-none bg-white flex flex-col items-center p-32 gap-32">
       <h1 className="flex flex-col item-center gap-3 text-xl font-extrabold text-primary w-1/2">
         <InfoCard title="Name" info={userData.name} />
-        <InfoCard title="Gender" info={userData.gender == true ? "male" : "fermale"} />
+        <InfoCard title="Gender" info={userData.gender == true ? "male" : "female"} />
         <InfoCard title="Phone" info={userData.phoneNumber} />
         <InfoCard title="Age" info={userData.age} />
         <InfoCard title="Rent" info={userData.rent} />

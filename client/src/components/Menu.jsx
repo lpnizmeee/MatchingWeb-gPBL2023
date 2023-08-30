@@ -31,9 +31,10 @@ function handleMatch({ action, targetUser, userA }) {
       withCredentials: true,
     });
     console.log(res.data);
+    // window.location.reload();
 };
 
-const HandleStatus = ({status, targetUser, userA}) => {
+const HandleStatus = ({status, targetUser, userA, reloadData}) => {
   switch (status) {
     case 0:
       return (
@@ -42,6 +43,7 @@ const HandleStatus = ({status, targetUser, userA}) => {
             className="rounded-full bg-green-400 hover:bg-green-500 w-20 h-20 border-2 border-white"
             onClick={(e) => {
               handleMatch({ action: 1, targetUser: targetUser, userA: userA });
+              reloadData(true);
             }}
           >
             Accept
@@ -51,7 +53,7 @@ const HandleStatus = ({status, targetUser, userA}) => {
             className="rounded-full bg-gray-400 hover:bg-gray-500 w-20 h-20 border-2 border-white" 
             onClick={(e) => {
               handleMatch({ action: 0, targetUser: targetUser, userA: userA });
-
+              reloadData(true);
             }}
           >
             Reject
@@ -67,7 +69,7 @@ const HandleStatus = ({status, targetUser, userA}) => {
             className="rounded-full bg-red-400 hover:bg-red-500 w-20 h-20 border-2 border-white"
             onClick={(e) => {
               handleMatch({ action: 2, targetUser: targetUser, userA: userA });
-
+              reloadData(true);
             }}
           >
             Cancel
@@ -82,7 +84,7 @@ const HandleStatus = ({status, targetUser, userA}) => {
             className="rounded-full bg-blue-400 hover:bg-blue-500 w-20 h-20 border-2 border-white"
             onClick={(e) => {
               handleMatch({ action: 3, targetUser: targetUser, userA: userA });
-
+              reloadData(true);
             }}
           >
             Match now
@@ -97,6 +99,7 @@ const HandleStatus = ({status, targetUser, userA}) => {
             className="rounded-full bg-orange-400 hover:bg-orange-500 w-20 h-20 border-2 border-white"
             onClick={(e) => {
               handleMatch({ action: 4, targetUser: targetUser, userA: userA });
+              reloadData(true);
             }}
           >
             Waiting
@@ -106,7 +109,7 @@ const HandleStatus = ({status, targetUser, userA}) => {
             className="rounded-full bg-red-400 hover:bg-red-500 w-20 h-20 border-2 border-white" 
             onClick={(e) => {
               handleMatch({ action: 5, targetUser: targetUser, userA: userA });
-
+              reloadData(true);
             }}
           >
             Cancel
@@ -120,7 +123,7 @@ const HandleStatus = ({status, targetUser, userA}) => {
 }
 
 
-const MenuItem = ({ itemKey, item, addToCart, userA }) => {
+const MenuItem = ({ itemKey, item, addToCart, userA, reloadData }) => {
   // console.log(item);
   return (
     <motion.div
@@ -139,37 +142,37 @@ const MenuItem = ({ itemKey, item, addToCart, userA }) => {
       </div> */}
 
       <div className="px-10 pb-5 pt-10 flex flex-col justify-between h-full">
-        <div className="rounded-bl-3xl rounded-t-xl bg-slate-300 py-10">
+        <div className="rounded-bl-3xl rounded-t-xl bg-white py-10">
           <div className="pl-10">
-            <div className="flex flex-row">
-              <div className="text-2xl font-serif text-red-600 w-2/5">Name: </div>
-              <div className="text-2xl font-serif text-red-600 w-3/5">{item.name}</div>
+            <div className="flex flex-row flex-wrap">
+              <div className="text-2xl font-body text-red-600 w-2/5">Name: </div>
+              <div className="text-2xl flex flex-wrap font-body text-red-600 w-3/5">{item.name}</div>
             </div>
             <div className="flex flex-row">
-              <div className="text-l font-serif text-stone-700 pt-2 w-2/5">Gender: </div> 
-              <div className="text-l font-serif text-stone-700 pt-2 w-2/5">{item.gender ? "male" : "female"}</div>
+              <div className="text-l text-stone-700 pt-2 w-2/5">Gender: </div> 
+              <div className="text-l text-stone-700 pt-2 w-2/5">{item.gender ? "male" : "female"}</div>
             </div>
             <div className="flex flex-row">
-              <div className="text-l font-serif text-stone-700 w-2/5">Age: </div> 
-              <div className="text-l font-serif text-stone-700 w-2/5">{item.age}</div>
+              <div className="text-l text-stone-700 w-2/5">Age: </div> 
+              <div className="text-l text-stone-700 w-2/5">{item.age}</div>
             </div>
             <div className="flex flex-row">
-              <div className="text-l font-serif text-stone-700 w-2/5">Phone: </div> 
-              <div className="text-l font-serif text-stone-700 w-2/5">{item.phoneNumber}</div>
+              <div className="text-l text-stone-700 w-2/5">Phone: </div> 
+              <div className="text-l text-stone-700 w-2/5">{item.phoneNumber}</div>
             </div>
             <div className="flex flex-row">
-              <div className="text-l font-serif text-stone-700 w-2/5">Longitude: </div> 
-              <div className="text-l font-serif text-stone-700 w-2/5">{item.longtitude}</div>
+              <div className="text-l text-stone-700 w-2/5">Longitude: </div> 
+              <div className="text-l text-stone-700 w-2/5">{item.longtitude}</div>
             </div>
             <div className="flex flex-row">
-              <div className="text-l font-serif text-stone-700 w-2/5">Latitude: </div> 
-              <div className="text-l font-serif text-stone-700 w-2/5">{item.latitude}</div>
+              <div className="text-l text-stone-700 w-2/5">Latitude: </div> 
+              <div className="text-l text-stone-700 w-2/5">{item.latitude}</div>
             </div>
           </div> 
         </div>
         <div className="justify-between items-center flex flex-row pt-5">
-          <div className="text-xl font-serif">Rent: {item.rent}$</div>
-          <HandleStatus status={item.status} targetUser={item} userA={userA}/>
+          <div className="text-xl font-body">Rent: {item.rent}$</div>
+          <HandleStatus status={item.status} targetUser={item} userA={userA} reloadData={reloadData}/>
         </div>
       </div>
     </motion.div>
@@ -183,7 +186,7 @@ const Menu = ({ addToCart }) => {
   const [query, setQuery] = useState("");
   const [data, setData] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
-  // const [targetUser, setTargetUser] = useState([]);
+  const [reload, setReload] = useState(false);
   const user = loadUserData();
 
 
@@ -198,9 +201,10 @@ const Menu = ({ addToCart }) => {
       });
       setData(res.data);
       console.log(res.data);
+      setReload(false);
     };
     fetchData();
-  }, []);
+  }, [reload]);
 
 
   // useEffect(() => {
@@ -213,12 +217,15 @@ const Menu = ({ addToCart }) => {
     if (query === "") return;
     if (query === "all") setQuery(" ");
     //TODO: Handle query
-    const data = { "data": query };
-    const res = await axios.post(`${backendUrl}/roommate/search/item`, data, {
+    const data = { "username": user.username,
+                    "keyword": query};
+    console.log(data);
+    const res = await axios.post(`${backendUrl}/roommate/usersearch/`, data, {
       withCredentials: true,
     });
     setData(res.data);
-    setSelectedFilter("All");
+    setReload(true)
+    // setSelectedFilter("All");
   };
 
 
@@ -254,6 +261,7 @@ const Menu = ({ addToCart }) => {
                 item={item}
                 addToCart={addToCart}
                 userA={user}
+                reloadData={setReload}
               />
             // ) : null
           )}
