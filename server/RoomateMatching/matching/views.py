@@ -249,7 +249,22 @@ class UserSearch(APIView):
         serializer = RecommendSerializer(ordered_objects,many=True)
         #return Response({'access_token': access_token})
         return Response(serializer.data)
-        
+###################
+class UserChat(APIView):
+    def post(self,request):
+        usernameA = request.data.get("usernameA")
+        usernameB = request.data.get("usernameB")
+        userA = UserInfor.objects.get(username=usernameA)
+        userB = UserInfor.objects.get(username=usernameB)
+        try:
+            objects = Match.objects.get(userIDA= userA.pk,userIDB=userB.pk)
+            return Response({"roomid": objects.pk})
+        except Match.DoesNotExist:
+            try:
+                objects = Match.objects.get(userIDA= userB.pk,userIDB=userA.pk)
+                return Response({"roomid": objects.pk})
+            except Match.DoesNotExist:
+                return Response({"message": "Something goes wrong"})       
 
 
 ##############################
