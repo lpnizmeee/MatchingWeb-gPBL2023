@@ -5,6 +5,7 @@ import GenericButton from "./Buttons/GenericButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { loadUserData, storeUserData } from "../storage-managers/userData";
 import axios from "axios";
+import { Link } from "react-router-dom";
 const backendUrl = import.meta.env.VITE_REACT_BACKEND_URL || ""; //from .env files
 
 
@@ -33,6 +34,19 @@ function handleMatch({ action, targetUser, userA }) {
     console.log(res.data);
     // window.location.reload();
 };
+
+const handleChat = ({ targetUser, userA }) => {
+  const data = {
+    "usernameA": userA.username,
+    "usernameB": targetUser.username,
+  }
+  console.log(data);
+  const res = axios.post(`${backendUrl}/roommate/chat/`, data, {
+    withCredentials: true,
+  });
+  window.location.href = `https://gpbl2023chat.pythonanywhere.com/?room_name=${res.data}&username=${userA.username}}`;
+  console.log(res.data);
+}
 
 const HandleStatus = ({status, targetUser, userA, reloadData}) => {
   switch (status) {
@@ -174,6 +188,18 @@ const MenuItem = ({ itemKey, item, addToCart, userA, reloadData }) => {
           <div className="text-xl font-body">Rent: {item.rent}$</div>
           <HandleStatus status={item.status} targetUser={item} userA={userA} reloadData={reloadData}/>
         </div>
+        {item.status != 2 ? 
+        <div className="pt-5">
+        <button
+            className="rounded bg-white hover:bg-slate-200 h-10 w-80 text-red-500 font-body text-xl" 
+            onClick={(e) => {
+              handleChat({ targetUser: item, userA: userA });
+            }}
+          >
+            Chat with {item.name}
+          </button>
+        </div> : null}
+
       </div>
     </motion.div>
   );
