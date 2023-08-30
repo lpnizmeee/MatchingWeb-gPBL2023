@@ -31,7 +31,7 @@ function handleMatch({ action, targetUser, userA }) {
     const res = axios.put(`${backendUrl}/roommate/match/`, data, {
       withCredentials: true,
     });
-    console.log(res.data);
+    // console.log(res.data);
     // window.location.reload();
 };
 
@@ -41,11 +41,12 @@ const handleChat = ({ targetUser, userA }) => {
     "usernameB": targetUser.username,
   }
   console.log(data);
-  const res = axios.post(`${backendUrl}/roommate/chat/`, data, {
+  const res = axios.post(`${backendUrl}/roommate/userchat/`, data, {
     withCredentials: true,
   });
-  window.location.href = `https://gpbl2023chat.pythonanywhere.com/?room_name=${res.data}&username=${userA.username}}`;
-  console.log(res.data);
+  // window.location.href = `https://gpbl2023chat.pythonanywhere.com/?room_name=${res.data}&username=${userA.username}}`;
+  console.log("request sent")
+  console.log(res.data["id"]);
 }
 
 const HandleStatus = ({status, targetUser, userA, reloadData}) => {
