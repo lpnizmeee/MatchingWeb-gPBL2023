@@ -35,18 +35,18 @@ function handleMatch({ action, targetUser, userA }) {
     // window.location.reload();
 };
 
-const handleChat = ({ targetUser, userA }) => {
-  const data = {
-    "usernameA": userA.username,
-    "usernameB": targetUser.username,
-  }
-  console.log(data);
-  const res = axios.post(`${backendUrl}/roommate/userchat/`, data, {
+const handleChat = async ({ targetUser, userA }) => {
+  const roomInfo = {
+    usernameA: userA.username,
+    usernameB: targetUser.username,
+  };
+  // console.log(roomInfo);
+  const res = await axios.post(`${backendUrl}/roommate/userchat/`, roomInfo, {
     withCredentials: true,
   });
-  // window.location.href = `https://gpbl2023chat.pythonanywhere.com/?room_name=${res.data}&username=${userA.username}}`;
-  console.log("request sent")
-  console.log(res.data["id"]);
+  // console.log(res.data);
+  window.location.href = `${import.meta.env.VITE_REACT_CHAT_URL}${res.data["id"]}&username=${userA.name}`;
+  
 }
 
 const HandleStatus = ({status, targetUser, userA, reloadData}) => {
@@ -250,6 +250,8 @@ const Menu = ({ addToCart }) => {
       withCredentials: true,
     });
     setData(res.data);
+    // console.log(res);
+    // console.log(res.data);
     // setReload(true)
     // setSelectedFilter("All");
   };
