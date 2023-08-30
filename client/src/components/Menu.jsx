@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { InputField } from "./InputFields/InputField";
 import GenericButton from "./Buttons/GenericButton";
 import { motion, AnimatePresence } from "framer-motion";
-import { loadUserData } from "../storage-managers/userData";
+import { loadUserData, storeUserData } from "../storage-managers/userData";
 import axios from "axios";
 const backendUrl = import.meta.env.VITE_REACT_BACKEND_URL || ""; //from .env files
 
@@ -20,8 +20,108 @@ const FilterButton = ({ text, selected, setSelected }) => {
   );
 };
 
+function handleMatch({ action, targetUser, userA }) {
+    const data = {
+      "action": action,
+      "usernameA": userA.username,
+      "usernameB": targetUser.username,
+    }
+    console.log(data);
+    const res = axios.put(`${backendUrl}/roommate/match/`, data, {
+      withCredentials: true,
+    });
+    console.log(res.data);
+};
 
-const MenuItem = ({ itemKey, item, addToCart }) => {
+const HandleStatus = ({status, targetUser, userA}) => {
+  switch (status) {
+    case 0:
+      return (
+        <div className="flex flex-row gap-1">
+          <button
+            className="rounded-full bg-green-400 hover:bg-green-500 w-20 h-20 border-2 border-white"
+            onClick={(e) => {
+              handleMatch({ action: 1, targetUser: targetUser, userA: userA });
+            }}
+          >
+            Accept
+          </button>
+
+          <button
+            className="rounded-full bg-gray-400 hover:bg-gray-500 w-20 h-20 border-2 border-white" 
+            onClick={(e) => {
+              handleMatch({ action: 0, targetUser: targetUser, userA: userA });
+
+            }}
+          >
+            Reject
+          </button>
+        </div>
+      );
+
+    case 1:
+      return (
+        <div>
+          <div>Matched</div>
+          <button
+            className="rounded-full bg-red-400 hover:bg-red-500 w-20 h-20 border-2 border-white"
+            onClick={(e) => {
+              handleMatch({ action: 2, targetUser: targetUser, userA: userA });
+
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      );
+
+    case 2:
+      return (
+        <div>
+          <button
+            className="rounded-full bg-blue-400 hover:bg-blue-500 w-20 h-20 border-2 border-white"
+            onClick={(e) => {
+              handleMatch({ action: 3, targetUser: targetUser, userA: userA });
+
+            }}
+          >
+            Match now
+          </button>
+        </div>
+      );
+
+    case 3:
+      return (
+        <div className="flex flex-row gap-1">
+          <button
+            className="rounded-full bg-orange-400 hover:bg-orange-500 w-20 h-20 border-2 border-white"
+            onClick={(e) => {
+              handleMatch({ action: 4, targetUser: targetUser, userA: userA });
+            }}
+          >
+            Waiting
+          </button>
+
+          <button
+            className="rounded-full bg-red-400 hover:bg-red-500 w-20 h-20 border-2 border-white" 
+            onClick={(e) => {
+              handleMatch({ action: 5, targetUser: targetUser, userA: userA });
+
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      );
+
+    default:
+      return null;
+  }
+}
+
+
+const MenuItem = ({ itemKey, item, addToCart, userA }) => {
+  // console.log(item);
   return (
     <motion.div
       key={itemKey}
@@ -38,25 +138,38 @@ const MenuItem = ({ itemKey, item, addToCart }) => {
         />
       </div> */}
 
-      <div className="px-10 pb-10 flex flex-col justify-between h-full">
-        <div className="text-xl">{item.name}</div>
-        <div className="text-sm">{item.gender}</div>
-        <div className="text-sm">{item.age}</div>
-        <div className="text-sm">{item.phoneNumber}</div>
-        <div className="text-sm">{item.longtitude}</div>
-        <div className="text-sm">{item.latitude}</div>
-        <div className="text-sm">{item.status}</div>
-
-        <div className="justify-between flex flex-row pt-5">
-          <div className="text-xl">${item.rent}</div>
-          <button
-            className="rounded-full bg-yellow-500 hover:bg-yellow-300 w-12 h-12"
-            onClick={(e) => {
-              addToCart(item);
-            }}
-          >
-            🛒
-          </button>
+      <div className="px-10 pb-5 pt-10 flex flex-col justify-between h-full">
+        <div className="rounded-bl-3xl rounded-t-xl bg-slate-300 py-10">
+          <div className="pl-10">
+            <div className="flex flex-row">
+              <div className="text-2xl font-serif text-red-600 w-2/5">Name: </div>
+              <div className="text-2xl font-serif text-red-600 w-3/5">{item.name}</div>
+            </div>
+            <div className="flex flex-row">
+              <div className="text-l font-serif text-stone-700 pt-2 w-2/5">Gender: </div> 
+              <div className="text-l font-serif text-stone-700 pt-2 w-2/5">{item.gender ? "male" : "female"}</div>
+            </div>
+            <div className="flex flex-row">
+              <div className="text-l font-serif text-stone-700 w-2/5">Age: </div> 
+              <div className="text-l font-serif text-stone-700 w-2/5">{item.age}</div>
+            </div>
+            <div className="flex flex-row">
+              <div className="text-l font-serif text-stone-700 w-2/5">Phone: </div> 
+              <div className="text-l font-serif text-stone-700 w-2/5">{item.phoneNumber}</div>
+            </div>
+            <div className="flex flex-row">
+              <div className="text-l font-serif text-stone-700 w-2/5">Longitude: </div> 
+              <div className="text-l font-serif text-stone-700 w-2/5">{item.longtitude}</div>
+            </div>
+            <div className="flex flex-row">
+              <div className="text-l font-serif text-stone-700 w-2/5">Latitude: </div> 
+              <div className="text-l font-serif text-stone-700 w-2/5">{item.latitude}</div>
+            </div>
+          </div> 
+        </div>
+        <div className="justify-between items-center flex flex-row pt-5">
+          <div className="text-xl font-serif">Rent: {item.rent}$</div>
+          <HandleStatus status={3} targetUser={item} userA={userA}/>
         </div>
       </div>
     </motion.div>
@@ -66,10 +179,11 @@ const MenuItem = ({ itemKey, item, addToCart }) => {
 //Get distinct categories from menuData
 // let categoryList = [...new Set(menuData.map((item) => item.category))];
 const Menu = ({ addToCart }) => {
-  const [selectedFilter, setSelectedFilter] = useState("All");
+  // const [selectedFilter, setSelectedFilter] = useState("All");
   const [query, setQuery] = useState("");
   const [data, setData] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
+  // const [targetUser, setTargetUser] = useState([]);
   const user = loadUserData();
 
 
@@ -77,18 +191,21 @@ const Menu = ({ addToCart }) => {
     const fetchData = async () => {
       const data = { data: " " };
       const username = { "username": user.username };
+      // console.log(username);
+      // console.log(user);
       const res = await axios.post(`${backendUrl}/roommate/recommend/`, username, {
         withCredentials: true,
       });
       setData(res.data);
+      console.log(res.data);
     };
     fetchData();
   }, []);
 
 
-  useEffect(() => {
-    setCategoryList([...new Set(data.map((item) => item.category[0]))]);
-  }, [data]);
+  // useEffect(() => {
+  //   setCategoryList([...new Set(data.map((item) => item.category[0]))]);
+  // }, [data]);
 
 
   const HandleSearch = async (e) => {
@@ -112,7 +229,7 @@ const Menu = ({ addToCart }) => {
         <InputField value={query} setValue={setQuery} placeholder="Search..." />
         <GenericButton text="Search" onClick={HandleSearch} />
       </div>
-      <div className="flex flex-row flex-wrap gap-3">
+      {/* <div className="flex flex-row flex-wrap gap-3">
         <FilterButton
           text="All"
           selected={selectedFilter}
@@ -126,18 +243,19 @@ const Menu = ({ addToCart }) => {
             setSelected={setSelectedFilter}
           />
         ))}
-      </div>
+      </div> */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 items-center mx-auto h-fit">
         <AnimatePresence>
           {data.map((item, index) =>
-            item.category[0] === selectedFilter || selectedFilter === "All" ? (
+            // item.category[0] === selectedFilter || selectedFilter === "All" ? (
               <MenuItem
                 key={index}
                 itemKey={index}
                 item={item}
                 addToCart={addToCart}
+                userA={user}
               />
-            ) : null
+            // ) : null
           )}
         </AnimatePresence>
       </div>

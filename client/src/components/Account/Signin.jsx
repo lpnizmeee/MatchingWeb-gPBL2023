@@ -24,7 +24,7 @@ const Signin = ({ setOverlay, setUserData }) => {
     // const loginDataForm = new FormData();
     // loginDataForm.append("data", JSON.stringify(loginData));
     try {
-      console.log(loginData);
+      // console.log(loginData);
       // console.log(loginDataForm);
       const response = await axios.post(
         `${backendUrl}/roommate/login/`,
@@ -37,7 +37,7 @@ const Signin = ({ setOverlay, setUserData }) => {
         setOverlay(false);
         alert("Login successful");
         setUserData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
         navigate("/user");
       }
     } catch (error) {

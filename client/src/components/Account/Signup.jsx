@@ -16,12 +16,12 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [validPassword, setValidPassword] = useState(false);
-  const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const [rent, setRent] = useState("");
+  const [gender, setGender] = useState(true);
+  const [age, setAge] = useState(20);
+  const [rent, setRent] = useState(1000000);
   const [locate, setLocate] = useState("");
-  const [longtitude, setLongtitude] = useState("");
-  const [latitude, setLatitude] = useState("");
+  const [longtitude, setLongtitude] = useState(105.8333522);
+  const [latitude, setLatitude] = useState(21.004);
 
 
 
@@ -56,6 +56,8 @@ const Signup = () => {
     const response = await axios.post(`${backendUrl}/roommate/`, signupData);
     if (response.status === 201) {
       console.log(response.data);
+      console.log(signupData);
+      
       alert("Signup successful, please go to the login page to login");
       navigate("/");
     }
