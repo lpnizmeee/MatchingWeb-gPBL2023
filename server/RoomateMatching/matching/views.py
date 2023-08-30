@@ -202,19 +202,23 @@ class UserSearch(APIView):
     def post(self,request):
         username = request.data.get("username")
         keyword = request.data.get("keyword")
+        words = keyword.split(" ")
         user1 = UserInfor.objects.get(username=username)
         if keyword=="male":
             keyword =True
         if keyword=="female":
             keyword=False
-        user = UserInfor.objects.filter(
-            Q(name__icontains=keyword) |
-            Q(age__icontains=keyword) |
-            Q(gender__icontains=keyword)|
-            Q(phoneNumber__icontains=keyword) |
-            Q(rent__icontains=keyword) 
-            #Q(longtitude__icontains=keyword)
-            )
+        user = UserInfor.objects.all()
+        for word in words:
+            user = user.filter(
+                Q(name__icontains=word) |
+                Q(age__icontains=word) |
+                Q(gender__icontains=word)|
+                Q(phoneNumber__icontains=word) |
+                Q(rent__icontains=word) 
+                #Q(longtitude__icontains=keyword)
+                )
+            
         ordered_objects = []
         for obj in user:
             #obj = UserInfor.objects.get(pk=pk)
