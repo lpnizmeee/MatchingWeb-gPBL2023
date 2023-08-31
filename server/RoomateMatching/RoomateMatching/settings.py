@@ -108,12 +108,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# CORS_ALLOW_ORIGINS = 'http://localhost:5173/'
 CORS_ALLOW_ORIGINS = [os.environ.get('FRONT_END_URL')]
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-# CORS_ALLOW_METHODS = ["DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT"]
+CORS_ALLOW_METHODS = ["DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT"]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
