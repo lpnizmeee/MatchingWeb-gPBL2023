@@ -231,10 +231,10 @@ const Menu = ({ addToCart }) => {
       setData(res.data);
       console.log(res);
       setReload(false);
-    }
-    catch (error) {
-      console.log(error.response.status); // 401
-    }
+      }
+      catch (error) {
+        console.log(error.response.status); // 401
+      }
     };
     fetchData();
 }, [reload]);
