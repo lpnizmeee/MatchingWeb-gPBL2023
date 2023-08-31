@@ -218,24 +218,25 @@ const Menu = ({ addToCart }) => {
 
 
   useEffect(() => {
-    try {
+    
     const fetchData = async () => {
       const data = { data: " " };
       const username = { "username": user.username };
       // console.log(username);
       // console.log(user);
+      try {
       const res = await axios.post(`${backendUrl}/roommate/recommend/`, username, {
         withCredentials: true,
       });
       setData(res.data);
       console.log(res);
       setReload(false);
+    }
+    catch (error) {
+      console.log(error.response.status); // 401
+    }
     };
     fetchData();
-  }
-  catch (error) {
-    console.log(error.response.status); // 401
-  }
 }, [reload]);
 
 
