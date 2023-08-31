@@ -66,7 +66,7 @@ const BoxMap = ({ setLongtitude, setLatitude, setLocate }) => {
       transformRequest: (url, resourceType) => {
         return {
           url: url,
-          mode: 'no-cors', // Đặt 'no-cors' cho tất cả yêu cầu
+          mode: 'no-cors',
         };
       },
     }); 

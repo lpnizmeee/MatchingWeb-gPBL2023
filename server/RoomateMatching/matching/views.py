@@ -204,12 +204,12 @@ class UserSearch(APIView):
         keyword = request.data.get("keyword")
         words = keyword.split(" ")
         user1 = UserInfor.objects.get(username=username)
-        if keyword=="male":
-            keyword =True
-        if keyword=="female":
-            keyword=False
         user = UserInfor.objects.all()
         for word in words:
+            if word=="male":
+                word =True
+            if word=="female":
+                word=False
             user = user.filter(
                 Q(name__icontains=word) |
                 Q(age__icontains=word) |
