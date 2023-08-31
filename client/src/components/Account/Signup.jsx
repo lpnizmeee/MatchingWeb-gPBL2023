@@ -107,6 +107,7 @@ const Signup = () => {
           placeholder={"Rent"}
         />
         <BoxMap setLongtitude={setLongtitude} setLatitude={setLatitude} setLocate={setLocate} />
+        <div className="h-10"></div>
         <InputField
           type={"text"}
           value={username}

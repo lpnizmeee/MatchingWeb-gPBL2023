@@ -63,12 +63,6 @@ const BoxMap = ({ setLongtitude, setLatitude, setLocate }) => {
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [lng, lat],
       zoom: zoom,
-      transformRequest: (url, resourceType) => {
-        return {
-          url: url,
-          mode: 'no-cors',
-        };
-      },
     }); 
 
     // Add navigation control (the +/- zoom buttons)
@@ -83,7 +77,6 @@ const BoxMap = ({ setLongtitude, setLatitude, setLocate }) => {
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
-      mode: 'no-cors',
     });
 
     geocoder.on('keyup', (e) => {
