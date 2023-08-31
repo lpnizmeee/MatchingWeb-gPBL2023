@@ -73,7 +73,7 @@ const UserPage = ({ userData }) => {
 
   const handleEdit = (e) => {
     e.preventDefault();
-    navigate("/edit");
+    navigate("/menu");
   }
   // const handleLoadOrders = async (e) => {
   //   e.preventDefault();
@@ -97,7 +97,7 @@ const UserPage = ({ userData }) => {
         <InfoCard title="Latitude" info={userData.latitude} />
 
 
-        <EditProfileButton text="Edit" onClick={handleEdit} />
+        <EditProfileButton text="Recommend" onClick={handleEdit} />
         <GenericButton text="Logout" onClick={handleLogout} />
         {/* <GenericButton text="load orders" onClick={handleLoadOrders} />
         {orders.length !== 0
