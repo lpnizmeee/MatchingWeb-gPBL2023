@@ -20,7 +20,7 @@ const members = [
     image: pnam,
     role: "Leader",
     description:
-      "Sophomore student at Shibaura Institute of Technology, majoring in Information Engineering",
+      "Junior student at Shibaura Institute of Technology, majoring in Information Engineering",
   },
   {
     name: "Do Thuy Duong",
