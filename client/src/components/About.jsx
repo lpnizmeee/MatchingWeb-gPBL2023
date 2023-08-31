@@ -98,7 +98,7 @@ const About = () => {
         Click the card for more information about me.
       </motion.p>
   */}
-      <div className="flex flex-wrap justify-evenly gap-16 mt-20 items-center ">
+      <div className="flex flex-wrap justify-evenly gap-8 mt-20 items-center ">
         {members.map((member, index) => (
           <MemberCard key={member.name} index={index} {...member} />
         ))}

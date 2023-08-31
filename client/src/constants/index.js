@@ -1,4 +1,4 @@
-import { cuong, hnam, pnam, anon, thanh, hadinh } from "../assets";
+import {pnam, anon,duong, giaanh, rikuto } from "../assets";
 
 const members = [
   {
@@ -10,21 +10,21 @@ const members = [
   },
   {
     name: "Hoang Gia Anh",
-    image: cuong,
-    role: "Fullstack Developer",
+    image: giaanh,
+    role: "Frontend Developer",
     description:
       "Sophomore student at Hanoi University of Science and Technology, majoring in Computer Science",
   },
   {
     name: "HARA Rikuto",
-    image: pnam,
+    image: rikuto,
     role: "Leader",
     description:
       "Junior student at Shibaura Institute of Technology, majoring in Information Engineering",
   },
   {
     name: "Do Thuy Duong",
-    image: hnam,
+    image: duong,
     role: "Back-end Developer",
     description:
       "Sophomore student at Hanoi University of Science and Technology, majoring in Computer Science",
