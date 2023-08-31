@@ -37,7 +37,7 @@ const Signin = ({ setOverlay, setUserData }) => {
         setOverlay(false);
         alert("Login successful");
         setUserData(response.data);
-        // console.log(response.data);
+        console.log(response.data);
         navigate("/user");
       }
     } catch (error) {
