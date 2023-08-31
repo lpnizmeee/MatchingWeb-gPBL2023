@@ -62,8 +62,14 @@ const BoxMap = ({ setLongtitude, setLatitude, setLocate }) => {
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [lng, lat],
-      zoom: zoom
-    });
+      zoom: zoom,
+      transformRequest: (url, resourceType) => {
+        return {
+          url: url,
+          mode: 'no-cors', // Đặt 'no-cors' cho tất cả yêu cầu
+        };
+      },
+    }); 
 
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
@@ -76,7 +82,8 @@ const BoxMap = ({ setLongtitude, setLatitude, setLocate }) => {
     // );
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl
+      mapboxgl: mapboxgl,
+      mode: 'no-cors',
     });
 
     geocoder.on('keyup', (e) => {
