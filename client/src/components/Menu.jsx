@@ -218,6 +218,7 @@ const Menu = ({ addToCart }) => {
 
 
   useEffect(() => {
+    try {
     const fetchData = async () => {
       const data = { data: " " };
       const username = { "username": user.username };
@@ -227,11 +228,15 @@ const Menu = ({ addToCart }) => {
         withCredentials: true,
       });
       setData(res.data);
-      // console.log(res.data);
+      console.log(res);
       setReload(false);
     };
     fetchData();
-  }, [reload]);
+  }
+  catch (error) {
+    console.log(error.response.status); // 401
+  }
+}, [reload]);
 
 
   // useEffect(() => {
